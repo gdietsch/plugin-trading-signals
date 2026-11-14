@@ -1,0 +1,122 @@
+{
+  "name": "@gdietsch/plugin-trading-signals",
+  "version": "0.1.0",
+  "description": "ElizaOS plugin: Base/Solana token risk verdict ($0.01), token pre-trade GO/CAUTION/STOP pack ($0.015) and whale flow ($0.02) for trading agents, paid per call over x402 in USDC from the agent's own wallet, or with a free API key.",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE",
+    ".env.example",
+    "examples"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node -e \"import('./src/index.js').then(m=>console.log(m.default.name, m.default.actions.length+' actions'))\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "elizaos",
+    "elizaos-plugin",
+    "eliza",
+    "plugin",
+    "ai-agent",
+    "x402",
+    "usdc",
+    "base",
+    "solana",
+    "token-security",
+    "rug-check",
+    "honeypot",
+    "whale-tracking",
+    "smart-money",
+    "crypto",
+    "trading-bot",
+    "pre-trade"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gdietsch/plugin-trading-signals.git"
+  },
+  "homepage": "https://github.com/gdietsch/plugin-trading-signals#readme",
+  "bugs": {
+    "url": "https://github.com/gdietsch/plugin-trading-signals/issues"
+  },
+  "author": "gdietsch",
+  "license": "MIT",
+  "dependencies": {
+    "@solana/kit": "^8.6.0",
+    "@x402/evm": "^2.31.0",
+    "@x402/fetch": "^2.31.0",
+    "@x402/svm": "^2.31.0",
+    "viem": "^2.57.19"
+  },
+  "peerDependencies": {
+    "@elizaos/core": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@elizaos/core": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {
+      "TRADING_SIGNALS_API_KEY": {
+        "type": "string",
+        "description": "Free (100 calls/month) or plan API key from https://signals.incomefather.com/pricing. Used first; no wallet payment.",
+        "required": false,
+        "sensitive": true
+      },
+      "TRADING_SIGNALS_EVM_PRIVATE_KEY": {
+        "type": "string",
+        "description": "Private key of a dedicated low-balance Base wallet holding USDC, for x402 pay-per-call. Falls back to EVM_PRIVATE_KEY.",
+        "required": false,
+        "sensitive": true
+      },
+      "TRADING_SIGNALS_SOLANA_PRIVATE_KEY": {
+        "type": "string",
+        "description": "Secret key (base58 or JSON byte array) of a dedicated low-balance Solana wallet holding USDC. Falls back to SOLANA_PRIVATE_KEY.",
+        "required": false,
+        "sensitive": true
+      },
+      "TRADING_SIGNALS_MAX_USD_PER_CALL": {
+        "type": "number",
+        "description": "Per-call payment cap in USD (default 0.05).",
+        "required": false,
+        "default": "0.05"
+      },
+      "TRADING_SIGNALS_MAX_USD_PER_DAY": {
+        "type": "number",
+        "description": "Per-process daily spend cap in USD (default 1).",
+        "required": false,
+        "default": "1"
+      },
+      "TRADING_SIGNALS_PREFERRED_NETWORK": {
+        "type": "string",
+        "description": "base or solana when both wallets are set (default base).",
+        "required": false
+      },
+      "TRADING_SIGNALS_BASE_URL": {
+        "type": "string",
+        "description": "API base URL (default https://signals.incomefather.com).",
+        "required": false
+      }
+    }
+  }
+}
